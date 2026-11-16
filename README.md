@@ -29,3 +29,10 @@ The captured `args` array is a shallow copy of the call's arguments. Values are 
 - `entries()` returns newest-last order. `drain()` returns the same and clears the buffer.
 - Only own, enumerable, function-valued properties of the target are wrapped. Non-function properties on a custom target are left alone.
 - `restore()` is idempotent in effect: after it returns the wrappers are gone and the buffer is left as-is for final inspection.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
